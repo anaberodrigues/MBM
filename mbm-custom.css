@@ -1,0 +1,158 @@
+/* =============================================
+   MBM Cosméticos - Estilos customizados
+   ============================================= */
+
+/* --- Reset de fonte global --- */
+* {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+}
+
+/* --- Utilitários Bootstrap extras --- */
+.bd-placeholder-img {
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: solid rgba(0, 0, 0, 0.15);
+  border-width: 1px 0;
+  box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
+              inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
+}
+
+.bi {
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
+/* --- Nav Scroller --- */
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Botão primário da marca --- */
+.btn-bd-primary {
+  --bd-violet-bg: #2c2c2c;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: rgb(34, 34, 34);
+  --bs-btn-border-color: var(--bd-violet-bg);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #606060;
+  --bs-btn-hover-border-color: #6528e0;
+  --bs-btn-active-bg: #3f109e;
+  --bs-btn-active-border-color: #5a23c8;
+}
+
+/* --- Toggle de tema --- */
+.bd-mode-toggle {
+  z-index: 1500;
+}
+
+.bd-mode-toggle .bi {
+  width: 1em;
+  height: 1em;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+  display: block !important;
+}
+
+/* =============================================
+   Seção hero / produto
+   ============================================= */
+
+/* Galeria de produtos (3 imagens lado a lado) */
+.produto-galeria {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.produto-galeria img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* =============================================
+   Seção "Por que escolher a MBM?"
+   ============================================= */
+
+.beneficios-titulo {
+  text-align: center;
+  font-weight: bold !important;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.beneficios-lista {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  text-align: center;
+}
+
+.beneficios-lista img {
+  width: 100px;
+  height: 100px;
+}
+
+/* =============================================
+   Imagem destaque (Prada / banner)
+   ============================================= */
+
+.banner-destaque {
+  width: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.banner-destaque img {
+  width: 100%;
+  display: block;
+}
+
+/* =============================================
+   Formulário de pré-cadastro
+   ============================================= */
+
+.form-cadastro {
+  margin-top: 50px;
+}
+
+.btn-cadastro {
+  background-color: #0A1F4D;
+  color: white;
+  width: 100%;
+}

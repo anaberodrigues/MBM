@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="pt-br" data-bs-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+  <meta name="generator" content="Astro v5.13.2" />
+  <title>MBM cosméticos — Painel</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/" />
+  <script src="../assets/js/color-modes.js"></script>
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" onerror="this.href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css'"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#712cf9" />
+  <link href="carousel.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { font-family: Arial, Helvetica, sans-serif !important; font-size: 1rem !important; font-weight: 500 !important; }
+    h1 { font-family: 'Playfair Display', serif !important; font-size: 1.5rem !important; font-weight: bold !important; }
+    h2 { font-family: 'Playfair Display', serif !important; font-size: 1.1rem !important; font-weight: bold !important; }
+    .bd-placeholder-img { text-anchor: middle; -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+    .b-example-divider { width: 100%; height: 3rem; background-color: #0000001a; border: solid rgba(0,0,0,0.15); border-width: 1px 0; box-shadow: inset 0 0.5em 1.5em #0000001a, inset 0 0.125em 0.5em #00000026; }
+    .bi { vertical-align: -0.125em; fill: currentColor; }
+    .nav-scroller { position: relative; z-index: 2; height: 2.75rem; overflow-y: hidden; }
+    .nav-scroller .nav { display: flex; flex-wrap: nowrap; padding-bottom: 1rem; margin-top: -1px; overflow-x: auto; text-align: center; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+    .btn-bd-primary { --bd-violet-bg: #2c2c2c; --bs-btn-color: var(--bs-white); --bs-btn-bg: rgb(34,34,34); --bs-btn-border-color: var(--bd-violet-bg); --bs-btn-hover-color: var(--bs-white); --bs-btn-hover-bg: #606060; --bs-btn-hover-border-color: #6528e0; --bs-btn-active-bg: #3f109e; --bs-btn-active-border-color: #5a23c8; }
+    .bd-mode-toggle { z-index: 1500; }
+    .bd-mode-toggle .bi { width: 1em; height: 1em; }
+    .bd-mode-toggle .dropdown-menu .active .bi { display: block !important; }
+
+    body { padding-top: 56px; }
+    .navbar-collapse { display: flex !important; flex-basis: auto; }
+
+    .sidebar { position: fixed; top: 56px; left: 0; bottom: 0; width: 240px; background-color: #0A1F4D; overflow-y: auto; z-index: 80; padding-top: 1rem; }
+    .sidebar .nav-link { color: rgba(255,255,255,0.7) !important; padding: .5rem 1.25rem; display: flex; align-items: center; gap: .5rem; border-radius: 0; transition: background .15s, color .15s; }
+    .sidebar .nav-link:hover { background: rgba(255,255,255,0.08); color: #fff !important; }
+    .sidebar .nav-link.active { background: rgba(201,168,76,0.2); color: #c9a84c !important; border-left: 3px solid #c9a84c; }
+    .sidebar-section { font-size: .68rem !important; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.35) !important; padding: 1rem 1.25rem .25rem; }
+    .submenu { padding-left: 1rem; }
+    .submenu .nav-link { font-size: .88rem !important; color: rgba(255,255,255,0.55) !important; }
+    .submenu .nav-link:hover { color: #fff !important; }
+    .sidebar-toggle-btn { background: none; border: none; color: rgba(255,255,255,0.7); width: 100%; text-align: left; padding: .5rem 1.25rem; display: flex; align-items: center; gap: .5rem; cursor: pointer; transition: background .15s, color .15s; }
+    .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .sidebar-toggle-btn .arrow { margin-left: auto; font-size: .75rem !important; transition: transform .2s; }
+    .sidebar-toggle-btn.open .arrow { transform: rotate(90deg); }
+    .main-content { margin-left: 240px; padding: 2rem; min-height: calc(100vh - 56px); }
+
+    .kpi-card { border: 1px solid rgba(201,168,76,0.2); border-radius: .75rem; padding: 1.25rem; background: var(--bs-body-bg); position: relative; overflow: hidden; transition: transform .2s, border-color .2s; }
+    .kpi-card:hover { transform: translateY(-3px); border-color: #c9a84c; }
+    .kpi-label { font-size: .7rem !important; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bs-secondary-color); margin-bottom: .4rem; }
+    .kpi-value { font-family: 'Playfair Display', serif !important; font-size: 1.8rem !important; font-weight: bold !important; color: #c9a84c; line-height: 1; }
+    .kpi-change { font-size: .75rem !important; margin-top: .4rem; }
+    .kpi-change.up { color: #2dce89; }
+    .kpi-change.down { color: #f5365c; }
+
+    .dash-card { border: 1px solid rgba(201,168,76,0.2); border-radius: .75rem; background: var(--bs-body-bg); transition: border-color .2s; margin-bottom: 1.25rem; }
+    .dash-card:hover { border-color: #c9a84c; }
+    .dash-card-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem .5rem; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .dash-card-header h2 { margin: 0; }
+    .dash-card-link { font-size: .78rem !important; color: #c9a84c !important; text-decoration: none; }
+    .dash-card-link:hover { color: #e2c47a !important; }
+    .dash-card-body { padding: 1rem 1.25rem 1.25rem; }
+
+    .dash-table th { font-size: .68rem !important; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bs-secondary-color); font-weight: 500 !important; border-color: rgba(201,168,76,0.15); }
+    .dash-table td { font-size: .82rem !important; border-color: rgba(128,128,128,.1); vertical-align: middle; }
+    .dash-table tbody tr { transition: background .15s; }
+    .dash-table tbody tr:hover { background: rgba(201,168,76,.05); }
+    .badge-entregue { background: rgba(45,206,137,.12) !important; color: #2dce89 !important; }
+    .badge-enviado  { background: rgba(201,168,76,.14) !important; color: #c9a84c !important; }
+    .badge-pendente { background: rgba(245,54,92,.12)  !important; color: #f5365c !important; }
+
+    .task-item { display: flex; align-items: center; gap: .75rem; padding: .65rem .85rem; background: rgba(128,128,128,.04); border: 1px solid rgba(128,128,128,.1); border-radius: .5rem; cursor: pointer; transition: background .15s, border-color .15s, transform .15s; margin-bottom: .5rem; }
+    .task-item:last-child { margin-bottom: 0; }
+    .task-item:hover { background: rgba(201,168,76,.06); border-color: rgba(201,168,76,0.2); transform: translateX(3px); }
+    .task-item.done { opacity: .5; }
+    .task-item.done .task-text { text-decoration: line-through; }
+    .task-check { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid rgba(128,128,128,.3); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: border-color .2s, background .2s; }
+    .task-check.checked { border-color: #2dce89; background: #2dce89; }
+    .task-check svg { width: .6rem; height: .6rem; fill: #fff; display: none; }
+    .task-check.checked svg { display: block; }
+    .task-text { font-size: .82rem !important; flex: 1; }
+    .task-tag { font-size: .7rem !important; font-weight: 600 !important; padding: 2px 8px; border-radius: 20px; }
+    .tag-mkt { background: rgba(201,168,76,.14); color: #c9a84c; }
+    .tag-est { background: rgba(45,206,137,.12); color: #2dce89; }
+    .tag-fin { background: rgba(245,54,92,.12); color: #f5365c; }
+
+    .progress { height: 6px; background: rgba(128,128,128,.15); }
+    .progress-bar-mbm { background: linear-gradient(90deg, #8a6e30, #e2c47a); }
+
+    .table-responsive-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .fade-up { animation: fadeUp .4s ease both; }
+  </style>
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="check2" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path></symbol>
+    <symbol id="circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path></symbol>
+    <symbol id="moon-stars-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path><path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path></symbol>
+    <symbol id="sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path></symbol>
+  </svg>
+
+  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+      <svg class="bi my-1 theme-icon-active" aria-hidden="true"><use href="#circle-half"></use></svg>
+      <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+      <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false"><svg class="bi me-2 opacity-50" aria-hidden="true"><use href="#sun-fill"></use></svg>Claro<svg class="bi ms-auto d-none" aria-hidden="true"><use href="#check2"></use></svg></button></li>
+      <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false"><svg class="bi me-2 opacity-50" aria-hidden="true"><use href="#moon-stars-fill"></use></svg>Escuro<svg class="bi ms-auto d-none" aria-hidden="true"><use href="#check2"></use></svg></button></li>
+      <li><button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true"><svg class="bi me-2 opacity-50" aria-hidden="true"><use href="#circle-half"></use></svg>Auto<svg class="bi ms-auto d-none" aria-hidden="true"><use href="#check2"></use></svg></button></li>
+    </ul>
+  </div>
+
+  <header data-bs-theme="dark">
+    <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <img src="img/mbmlogo_transparent.png" width="42" height="42" alt="MBM logo">
+          MBM cosméticos
+        </a>
+        <div class="navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item"><a class="nav-link" href="index.html">Ínicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Portfólio</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="dashboard20.html">Dashboard</a></li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="text" placeholder="Procurar" aria-label="Procurar" />
+            <button class="btn btn-outline-success" type="submit">Procurar</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="sidebar" aria-label="Menu lateral">
+    <div class="text-center py-3 border-bottom" style="border-color:rgba(201,168,76,0.2)!important">
+      <img src="img/mbmlogo_transparent.png" width="72" height="72" alt="MBM logo">
+    </div>
+    <p class="sidebar-section">Principal</p>
+    <nav>
+      <a href="#visao-geral" class="nav-link active" onclick="setActive(this)">&#9632; Dashboard</a>
+      <a href="#pedidos" class="nav-link" onclick="setActive(this)">&#9632; Pedidos <span class="badge bg-warning text-dark ms-auto" style="font-size:.65rem!important">12</span></a>
+      <button class="sidebar-toggle-btn" onclick="toggleSub('sub-produtos', this)">&#9632; Produtos <span class="arrow">&#9658;</span></button>
+      <div class="submenu collapse" id="sub-produtos">
+        <a href="#" class="nav-link">Cadastrar produto</a>
+        <a href="#" class="nav-link">Lista de produtos</a>
+        <a href="#" class="nav-link">Categorias</a>
+      </div>
+      <a href="#clientes" class="nav-link" onclick="setActive(this)">&#9632; Clientes</a>
+    </nav>
+    <p class="sidebar-section">Gestão</p>
+    <nav>
+      <a href="#estoque" class="nav-link" onclick="setActive(this)">&#9632; Estoque / Metas</a>
+      <button class="sidebar-toggle-btn" onclick="toggleSub('sub-relatorios', this)">&#9632; Relatórios <span class="arrow">&#9658;</span></button>
+      <div class="submenu collapse" id="sub-relatorios">
+        <a href="#" class="nav-link">Vendas</a>
+        <a href="#" class="nav-link">Clientes</a>
+        <a href="#" class="nav-link">Estoque</a>
+      </div>
+      <a href="#cadastrar" class="nav-link" onclick="setActive(this)">&#9632; Cadastrar Produto</a>
+      <a href="#" class="nav-link">&#9632; Configurações</a>
+    </nav>
+  </aside>
+
+
+  <main class="main-content">
+    <section id="visao-geral" style="background-color: var(--bs-body-bg);">
+
+      <div class="mb-4 fade-up">
+        <h1>Painel de Controle</h1>
+        <p class="text-muted">Junho 2026 · visão geral do negócio</p>
+      </div>
+
+      <div class="row g-3 mb-4 fade-up">
+        <div class="col-6 col-xl-3"><div class="kpi-card"><p class="kpi-label">Receita Total</p><p class="kpi-value">R$48.320</p><p class="kpi-change up">▲ 18,4% este mês</p></div></div>
+        <div class="col-6 col-xl-3"><div class="kpi-card"><p class="kpi-label">Pedidos</p><p class="kpi-value">342</p><p class="kpi-change up">▲ 9,2% este mês</p></div></div>
+        <div class="col-6 col-xl-3"><div class="kpi-card"><p class="kpi-label">Novos Clientes</p><p class="kpi-value">87</p><p class="kpi-change up">▲ 5,1% este mês</p></div></div>
+        <div class="col-6 col-xl-3"><div class="kpi-card"><p class="kpi-label">Ticket Médio</p><p class="kpi-value">R$141</p><p class="kpi-change down">▼ 2,3% este mês</p></div></div>
+      </div>
+
+      <div class="row g-3 mb-4 fade-up">
+        <div class="col-lg-8">
+          <div class="dash-card">
+            <div class="dash-card-header"><h2>Vendas por Mês</h2><a href="#" class="dash-card-link">Ver relatório →</a></div>
+            <div class="dash-card-body"><canvas id="vendasChart" height="120"></canvas></div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="dash-card">
+            <div class="dash-card-header"><h2>Canais de Venda</h2></div>
+            <div class="dash-card-body d-flex justify-content-center align-items-center"><div style="width:100%;height:180px"><canvas id="canaisChart"></canvas></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4 fade-up" id="pedidos">
+        <div class="col-lg-7">
+          <div class="dash-card">
+            <div class="dash-card-header"><h2>Pedidos Recentes</h2><a href="#" class="dash-card-link">Ver todos →</a></div>
+            <div class="dash-card-body">
+              <div class="table-responsive-wrapper">
+                <table class="table dash-table mb-0">
+                  <thead><tr><th scope="col">Pedido</th><th scope="col">Cliente</th><th scope="col">Produto</th><th scope="col">Valor</th><th scope="col">Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>#4821</td><td>Juliana M.</td><td>Batom Matte</td><td>R$89,90</td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+                    <tr><td>#4820</td><td>Camila R.</td><td>Sérum Gold</td><td>R$159,00</td><td><span class="badge badge-enviado">Enviado</span></td></tr>
+                    <tr><td>#4819</td><td>Fernanda S.</td><td>Base Nude</td><td>R$129,90</td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+                    <tr><td>#4818</td><td>Beatriz L.</td><td>Paleta Glam</td><td>R$219,00</td><td><span class="badge badge-pendente">Pendente</span></td></tr>
+                    <tr><td>#4817</td><td>Mariana T.</td><td>Perfume Doux</td><td>R$299,00</td><td><span class="badge badge-enviado">Enviado</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="dash-card">
+            <div class="dash-card-header"><h2>Tarefas do Dia</h2></div>
+            <div class="dash-card-body">
+              <div class="task-item" onclick="toggleTask(this)"><div class="task-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="task-text">Revisar pedidos pendentes</span><span class="task-tag tag-fin">Financeiro</span></div>
+              <div class="task-item" onclick="toggleTask(this)"><div class="task-check checked"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="task-text">Atualizar fotos dos produtos</span><span class="task-tag tag-mkt">Marketing</span></div>
+              <div class="task-item done" onclick="toggleTask(this)"><div class="task-check checked"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="task-text">Verificar estoque do batom</span><span class="task-tag tag-est">Estoque</span></div>
+              <div class="task-item" onclick="toggleTask(this)"><div class="task-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="task-text">Responder avaliações do site</span><span class="task-tag tag-mkt">Marketing</span></div>
+              <div class="task-item" onclick="toggleTask(this)"><div class="task-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="task-text">Fechar relatório de junho</span><span class="task-tag tag-fin">Financeiro</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-card fade-up" id="estoque">
+        <div class="dash-card-header"><h2>Metas do Mês — Junho 2026</h2></div>
+        <div class="dash-card-body">
+          <table class="table dash-table mb-0">
+            <thead><tr><th scope="col">Meta</th><th scope="col" style="width:40%">Progresso</th><th scope="col">Realizado</th><th scope="col">Objetivo</th></tr></thead>
+            <tbody>
+              <tr><td>Receita Mensal</td><td><div class="progress"><div class="progress-bar progress-bar-mbm" style="width:80%" role="progressbar"></div></div></td><td>R$48.320</td><td>R$60.000</td></tr>
+              <tr><td>Novos Clientes</td><td><div class="progress"><div class="progress-bar progress-bar-mbm" style="width:87%" role="progressbar"></div></div></td><td>87</td><td>100</td></tr>
+              <tr><td>Pedidos Entregues</td><td><div class="progress"><div class="progress-bar progress-bar-mbm" style="width:65%" role="progressbar"></div></div></td><td>222</td><td>342</td></tr>
+              <tr><td>Avaliações 5★</td><td><div class="progress"><div class="progress-bar progress-bar-mbm" style="width:92%" role="progressbar"></div></div></td><td>46</td><td>50</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dash-card fade-up" id="cadastrar">
+        <div class="dash-card-header"><h2>Cadastrar Novo Produto</h2></div>
+        <div class="dash-card-body">
+          <p class="text-muted mb-3">Preencha os dados do produto. Campos com * são obrigatórios.</p>
+          <form id="produto-form" novalidate onsubmit="handleSubmit(event)">
+            <div class="row g-3">
+              <div class="col-md-6"><label for="nome" class="form-label">Nome do produto *</label><input type="text" class="form-control" id="nome" placeholder="Ex: Batom Matte Velvet" required minlength="3" maxlength="80" autocomplete="off"/></div>
+              <div class="col-md-6"><label for="categoria" class="form-label">Categoria *</label><select class="form-select" id="categoria" required><option value="">Selecione...</option><option>Lábios</option><option>Rosto</option><option>Olhos</option><option>Skincare</option><option>Perfumes</option></select></div>
+              <div class="col-md-3"><label for="preco" class="form-label">Preço (R$) *</label><input type="number" class="form-control" id="preco" placeholder="0,00" required min="1" max="9999" step="0.01"/></div>
+              <div class="col-md-3"><label for="estoque-campo" class="form-label">Estoque *</label><input type="number" class="form-control" id="estoque-campo" placeholder="0" required min="0" max="9999"/></div>
+              <div class="col-md-3"><label for="sku" class="form-label">Código SKU</label><input type="text" class="form-control" id="sku" placeholder="MBM-001" pattern="[A-Z]{3}-[0-9]{3}"/></div>
+              <div class="col-md-3"><label for="email-fornecedor" class="form-label">E-mail do fornecedor</label><input type="email" class="form-control" id="email-fornecedor" placeholder="fornecedor@email.com"/></div>
+              <div class="col-12"><label for="descricao" class="form-label">Descrição</label><textarea class="form-control" id="descricao" rows="3" placeholder="Descreva o produto..." maxlength="500"></textarea></div>
+              <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn" style="background-color: #0A1F4D; color: white;">Salvar Produto</button>
+                <button type="reset" class="btn btn-outline-secondary">Limpar</button>
+              </div>
+            </div>
+            <div id="form-msg" role="alert" class="mt-3" style="display:none; padding:.75rem 1rem; border-radius:.5rem; font-size:.85rem;"></div>
+          </form>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="container">
+      <p class="float-end"><a href="#">Voltar ao topo</a></p>
+      <p>&copy; 2026 Company, Inc. &middot; <a href="#">Privacidade</a> &middot; <a href="#">Termos</a></p>
+    </footer>
+  </main>
+
+  <script src="../assets/dist/js/bootstrap.bundle.min.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';document.head.appendChild(s)"></script>
+  <script>
+    function setActive(el) { document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active')); el.classList.add('active'); }
+    function toggleSub(id, btn) { document.getElementById(id).classList.toggle('show'); btn.classList.toggle('open'); }
+    function toggleTask(item) { item.querySelector('.task-check').classList.toggle('checked'); item.classList.toggle('done'); }
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = document.getElementById('produto-form');
+      const msg = document.getElementById('form-msg');
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        msg.style.cssText = 'display:block;background:rgba(245,54,92,.1);border:1px solid rgba(245,54,92,.3);color:#f5365c';
+        msg.textContent = '⚠ Preencha todos os campos obrigatórios corretamente.';
+        return;
+      }
+      form.classList.remove('was-validated');
+      msg.style.cssText = 'display:block;background:rgba(45,206,137,.1);border:1px solid rgba(45,206,137,.3);color:#2dce89';
+      msg.textContent = '✓ Produto cadastrado com sucesso!';
+      form.reset();
+      setTimeout(() => { msg.style.display = 'none'; }, 3000);
+    }
+    const isDark = () => document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    const gridColor = () => isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+    const textColor = () => isDark() ? '#9ca3af' : '#6b7280';
+    const vendasCtx = document.getElementById('vendasChart').getContext('2d');
+    const vendasChart = new Chart(vendasCtx, {
+      type: 'line',
+      data: { labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'], datasets: [{ label: 'Vendas (R$)', data: [18000, 24000, 22000, 35000, 40000, 48320], borderColor: '#c9a84c', backgroundColor: 'rgba(201,168,76,0.15)', borderWidth: 2.5, pointBackgroundColor: '#c9a84c', pointRadius: 4, pointHoverRadius: 6, fill: true, tension: 0.4 }] },
+      options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { grid: { color: gridColor() }, ticks: { color: textColor() } }, y: { grid: { color: gridColor() }, ticks: { color: textColor(), callback: v => 'R$' + v.toLocaleString('pt-BR') } } } }
+    });
+    const canaisCtx = document.getElementById('canaisChart').getContext('2d');
+    new Chart(canaisCtx, {
+      type: 'doughnut',
+      data: { labels: ['Site', 'Instagram', 'WhatsApp'], datasets: [{ data: [50, 30, 20], backgroundColor: ['#c9a84c', '#2dce89', '#f5365c'], borderWidth: 0, hoverOffset: 6 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: textColor(), padding: 12, font: { size: 12 }, boxWidth: 12 } } } }
+    });
+    new MutationObserver(() => {
+      vendasChart.options.scales.x.grid.color = gridColor();
+      vendasChart.options.scales.y.grid.color = gridColor();
+      vendasChart.options.scales.x.ticks.color = textColor();
+      vendasChart.options.scales.y.ticks.color = textColor();
+      vendasChart.update();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  </script>
+</body>
+</html>
